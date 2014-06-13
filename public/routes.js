@@ -1,9 +1,8 @@
 (function(angular){
 	"use strict";
 
-	var app = angular.module('MyStore');
-
-	app.config(function($stateProvider, $urlRouterProvider) {
+	angular.module('MyStore')
+        .config(function($stateProvider, $urlRouterProvider) {
 
 		$urlRouterProvider.otherwise('/');
 
@@ -35,7 +34,17 @@
 			.state('contact', {
 				url: '/contact',
 				template: '<h1>Contact</h1>'
-			});
+			})
+            .state('login', {
+                url: '/login',
+                controller: 'LoginController',
+                templateUrl: 'views/login.html'
+            })
+            .state('signup', {
+                url: '/signup',
+                controller: 'SignupController',
+                templateUrl: 'views/signup.html'
+            });
 
 	});
 
