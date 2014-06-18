@@ -3,16 +3,29 @@
 
 	var app = angular.module('MyStore');
 
-	app.factory('CartService', function() {
+	app.factory('CartService', function($cookieStore, ProductService) {
 
 		// Private items variable
 		var items = {};
 
 		// Angular factories return service objects
-		return {
+		var cart = {
 
 			getItems: function() {
+                var itemsCookie;
 				// Returns items object
+                if(!items.length) {
+                    itemsCookie = $cookieStore.get('items');
+                    if(itemsCookie) {
+                        angular.forEach(itemsCookie, function(item, key) {
+                            ProductService.getProduct(key).then(function(response){
+                                var product = response.data;
+                                product.quantity = item;
+                                items[product.guid] = product;
+                            });
+                        });
+                    }
+                }
                 return items;
 			},
 
@@ -28,6 +41,7 @@
                     items[item.guid].quantity += 1;
                     //items[item.guid].quantity = items[item.guid].quantity + 1
                 }
+                cart.updateItemsCookie();
 			},
 
 			removeItem: function(guid) {
@@ -41,11 +55,13 @@
                 // delete x; // return false
                 // y = 10;
                 // delete y; // return true
+                cart.updateItemsCookie();
 			},
 
 			emptyCart: function() {
 				// Sets items array to empty array
                 items = {};
+                $cookieStore.remove('items');
 			},
 
 			getItemCount: function() {
@@ -63,25 +79,34 @@
                 angular.forEach(items, function(item) {
                     var s = parseInt(item.quantity);
                     var q = isNaN(s) ? 0 : s;
-                    var p = parseFloat(item.isSpecial ? item.specialPrice : item.price);
+                    var p = cart.getItemPrice(item);
                    total += q * p;
                 });
                 return total;
             },
 
 			getCartTotal: function() {
-				// Return the cartSubtotal plus shipping and handling
-                // Return the item quantity times item price for each item in the array
-                var total = 0;
-                angular.forEach(items, function(item) {
-                    var s = parseInt(item.quantity);
-                    var q = isNaN(s) ? 0 : s;
-                    var p = parseFloat(item.isSpecial ? item.specialPrice : item.price);
-                    total += q * p;
+				// TODO Return the cartSubtotal plus shipping and handling
+                // TODO Return the item quantity times item price for each item in the array
+                return cart.getCartSubtotal();
+			},
+
+            // aaronaroberson@gmail.com
+
+            updateItemsCookie: function() {
+                var itemsCookie = {};
+                angular.forEach(items, function(item, key) {
+                    itemsCookie[key] = item.quantity;
                 });
-                return total;
-			}
+                $cookieStore.put('items', itemsCookie);
+            },
+
+            getItemPrice: function(item) {
+                return parseFloat(item.isSpecial ? item.specialPrice : item.price);
+            }
 		};
+
+        return cart;
 
 	});
 
