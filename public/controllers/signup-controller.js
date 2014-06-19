@@ -1,43 +1,43 @@
 (function(angular) {
-	"use strict";
+    "use strict";
 
-	var app = angular.module('MyStore');
+    var app = angular.module('MyStore');
 
-	app.controller('SignupController', function($scope, $state, $timeout, Auth) {
+    app.controller('SignupController', function($scope, $state, $timeout, Auth) {
 
-		function successCallback() {
-			$scope.alert = {
-				type: 'success',
-				message: 'Your account has been created.'
-			};
+        function successCallback() {
+            $scope.alert = {
+                type: 'success',
+                message: 'Your account has been created.'
+            };
 
-			$timeout(function() {
+            $timeout(function() {
 
-				$state.go('login');
+                $state.go('login');
 
-				$scope.alert = undefined;
+                $scope.alert = undefined;
 
-			}, 3000);
-		}
+            }, 3000);
+        }
 
-		function errorCallback() {
-			$scope.alert = {
-				type: 'danger',
-				message: 'There was an error created your account. Please try again.'
-			};
+        function errorCallback() {
+            $scope.alert = {
+                type: 'danger',
+                message: 'There was an error created your account. Please try again.'
+            };
 
-			$timeout(function() {
-				$scope.alert = undefined;
+            $timeout(function() {
+                $scope.alert = undefined;
 
-			}, 3000);
-		}
+            }, 3000);
+        }
 
-		$scope.signup = function() {
-			Auth.signup({
-				email   : $scope.email,
-				password: $scope.password
-			}, successCallback, errorCallback);
-		};
-	});
+        $scope.signup = function() {
+            Auth.signup({
+                email   : $scope.email,
+                password: $scope.password
+            }, successCallback, errorCallback);
+        };
+    });
 
 })(window.angular);

@@ -13,6 +13,7 @@
         </div>
 
 		<table class="table table-hover" ng-show="getItemCount()">
+		<table class="table table-hover" ng-show="getItemCount()">
 			<thead>
 			<tr>
 				<th>Product</th>
@@ -31,13 +32,13 @@
 							<img class="media-object" ng-src="{{item.thumbnail}}" style="width: 72px; height: 72px;"> </a>
 
 						<div class="media-body">
-							<h4 class="media-heading"><a ui-shref="product({guid: item.guid})" ng-bind="item.title"></a></h4>
+							<h4 class="media-heading"><a ui-sref="product({guid: item.guid})" ng-bind="item.title"></a></h4>
 							<h5 class="media-heading"> by <a href="#" ng-bind="item.manufacturer"></a></h5>
 						</div>
 					</div>
 				</td>
 				<td class="col-sm-1 col-md-1 text-center">
-					<input type="input" class="form-control" ng-model="item.quantity">
+					<input type="text" class="form-control" ng-model="item.quantity" required>
 				</td>
 				<td class="col-sm-1 col-md-1 text-center"><strong>{{item.isSpecial ? item.specialPrice : item.price | currency}}</strong></td>
 				<td class="col-sm-1 col-md-1 text-center"><strong>{{item.isSpecial ? item.specialPrice * item.quantity : item.price * item.quantity | currency}}</strong></td>
@@ -66,7 +67,7 @@
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td><h3>Total</h3></td>
-				<td class="text-right"><h3><strong>{{cartTotal() | currency}}</strong></h3></td>
+				<td class="text-right"><h3><strong>{{cartTotal() | currency }}</strong></h3></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>

@@ -1,9 +1,8 @@
 (function(angular){
 	"use strict";
 
-	var app = angular.module('MyStore');
-
-	app.config(function($stateProvider, $urlRouterProvider) {
+	angular.module('MyStore')
+        .config(function($stateProvider, $urlRouterProvider) {
 
 		$urlRouterProvider.otherwise('/');
 
@@ -45,7 +44,7 @@
 				url: '/signup',
 				controller: 'SignupController',
 				templateUrl: 'views/signup.html'
-			});
+            });
 
 	});
 

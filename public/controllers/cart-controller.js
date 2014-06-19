@@ -10,17 +10,17 @@
 
         $scope.getItemCount = CartService.getItemCount;
 
-	    $scope.removeItem = CartService.removeItem;
+	    $scope.addItem = CartService.addItem;
 
-        $scope.emptyCart = CartService.emptyCart;
+        $scope.getItemCount = CartService.getItemCount;
+
+	    $scope.removeItem = CartService.removeItem;
+	    $scope.cartSubtotal = CartService.getCartSubtotal;
 
 	    $scope.cartSubtotal = CartService.getCartSubtotal;
 
-	    $scope.cartTotal = CartService.getCartTotal;
-
 	    $scope.checkout = function() {
 		    CartService.checkout();
-	    }
 
     });
 

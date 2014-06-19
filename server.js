@@ -13,7 +13,7 @@ var bodyParser   = require('body-parser');
 var passport     = require('passport');
 var session      = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
-var bcrypt        = require('bcryptjs');
+var bcrypt        = require('bcrypt-nodejs');
 
 /* ===================== CONFIGURATION ==================== */
 
@@ -64,34 +64,34 @@ fs.readdirSync(__dirname + '/models').forEach(function(filename) {
 
 /* ===================== PASSPORT ========================= */
 passport.serializeUser(function(user, done) {
-	done(null, user.id);
+    done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-	var User = mongoose.model('User');
+    var User = mongoose.model('User');
 
-	User.findById(id, function(err, user) {
-		done(err, user);
-	});
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
 });
 
 passport.use(new LocalStrategy({ usernameField: 'email' }, function(email, password, done) {
-	var User = mongoose.model('User');
+    var User = mongoose.model('User');
 
-	User.findOne({ email: email }, function(err, user) {
-		if (err) return done(err);
-		if (!user) return done(null, false);
+    User.findOne({ email: email }, function(err, user) {
+        if (err) return done(err);
+        if (!user) return done(null, false);
 
-		function cb(err, isMatch) {
-			if (err) return done(err);
-			if (isMatch) return done(null, user);
-			return done(null, false);
-		}
-		bcrypt.compare(password, user.password, function(err, isMatch) {
-			if (err) return cb(err);
-			cb(null, isMatch);
-		});
-	});
+        function cb(err, isMatch) {
+            if (err) return done(err);
+            if (isMatch) return done(null, user);
+            return done(null, false);
+        }
+        bcrypt.compare(password, user.password, function(err, isMatch) {
+            if (err) return cb(err);
+            cb(null, isMatch);
+        });
+    });
 }));
 
 /* ================= REGISTER MODULES ===================== */
@@ -105,11 +105,11 @@ app.use(passport.initialize());                                         // Initi
 app.use(passport.session());                                            // Creates a passport session
 app.use(express.static(path.join(__dirname, 'public')));		        // set the static files location
 app.use(function(req, res, next) {
-	if (req.user) {
-		res.cookie('user', JSON.stringify(req.user));
-	}
-	next();
-});                                                                     // Adds the user to cookies
+    if (req.user) {
+        res.cookie('user', JSON.stringify(req.user));
+    }
+    next();
+});
 
 /* ======================== ROUTES ========================= */
 require('./routes.js')(app);                            		        // configure our routes, passing in app reference

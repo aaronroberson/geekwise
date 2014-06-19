@@ -69,6 +69,21 @@
 			        <a href="javascript:void(0);" ng-click="logout()">Logout</a>
 		        </li>
 		    </ul>
+            <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
+                <li ui-sref-active="active">
+                    <a ui-sref="login">Login</a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="signup">Sign up</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-right" ng-if="currentUser">
+                <li class="navbar-text" ng-bind="currentUser.email">
+                </li>
+                <li>
+                    <a href="javascript:void(0);" ng-click="logout()">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
 

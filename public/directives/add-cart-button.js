@@ -9,7 +9,7 @@
             // E for Element
             // A for Attribute
             // C for Class
-	        restrict: 'E',
+            restrict: 'E',
             scope: {
                 // 3 types of bindings for scope properties
                 // @ which is a string
@@ -20,7 +20,6 @@
             replace: true,
             templateUrl: 'templates/add-cart-button.html',
             link: function(scope, elem, attr) {
-
                 scope.addItem = CartService.addItem;
             }
 
@@ -28,4 +27,4 @@
     });
 
 })(window.angular);
-
+})(window.angular);

@@ -9,17 +9,17 @@
 
 	<div class="col-sm-9">
 		<!-- Use the built-in ng-hid directive to hide the alert if the product inventory is 0 -->
-		<div class="alert alert-danger" ng-show="product.inventory === 0"><strong>This item is currently unavailable</strong></div>
+		<div class="alert alert-danger" ng-hide="product.inventory"><strong>This item is currently unavailable</strong></div>
 		<!-- Use the built-in ng-bind directive to add the product title to the h2 title tag -->
 		<h2 ng-bind="product.title"></h2>
 		<!-- Use the ng-class directive to add the .old class if product isSpecial is truthy, bind the price to the tag -->
-		<p ng-class="{old:product.isSpecial}">{{product.price | currency}}</p>
+		<p ng-class="{old:product.isSpecial}" ng-bind="product.price"></p>
 		<!-- Use the built-in ng-show directive to show the product specialPrice if product isSpecial is truthy, bind the specialPrice to the tag -->
-		<p ng-show="product.isSpecial">{{product.specialPrice | currency}}</p>
+		<p ng-show="product.isSpecial" ng-bind="product.specialPrice"></p>
 		<!-- bind the product description to the tag -->
 		<p ng-bind="product.description"></p>
 		<div>
-			<ms-add-cart product="product"></ms-add-cart>
+            <ms-add-cart product="product"></ms-add-cart>
 		</div>
 	</div>
 </div>

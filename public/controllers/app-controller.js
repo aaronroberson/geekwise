@@ -1,28 +1,30 @@
 (function(angular) {
 
-	var app = angular.module('MyStore');
+    var app = angular.module('MyStore');
 
-	app.controller('AppController', function($scope, $state, $timeout, Auth) {
+    app.controller('AppController', function($scope, $state, $timeout, Auth) {
 
 
-		function successCallback() {
+        function successCallback() {
 
-			$state.go('login');
+            $state.go('login');
 
-			$scope.alert = {
-				type: 'success',
-				message: 'You have been logged out.'
-			};
+            $scope.alert = {
+                type: 'success',
+                message: 'You have been logged out.'
+            };
 
-			$timeout(function() {
-				$scope.alert = undefined;
+            $timeout(function() {
+                $scope.alert = undefined;
 
-			}, 3000);
-		}
-		$scope.logout = function() {
-			Auth.logout(successCallback);
-		}
+            }, 3000);
 
-	});
+        }
+
+        $scope.logout = function() {
+            Auth.logout(successCallback);
+        }
+
+    });
 
 })(window.angular);

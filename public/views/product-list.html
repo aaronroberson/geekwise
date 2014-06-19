@@ -1,7 +1,5 @@
 <div>
 
-    <ms-mini-cart></ms-mini-cart>
-
 	<div class="filters">
 		<!-- Loop over filters -->
 		<div class="filter-block" ng-repeat="filter in filters">
@@ -19,6 +17,8 @@
 
 	<div class="products">
 
+		<ms-mini-cart></ms-mini-cart>
+
 		<!-- loop over products -->
 		<div class="product-box" ng-repeat="product in products">
 			<!-- Product title -->
@@ -31,16 +31,16 @@
 					<!-- Product title -->
 					<h2 ng-bind="product.title"></h2>
 					<!-- Conditional old class -->
-					<p ng-class="{old: product.isSpecial}">{{product.price | currency}}</p>
+					<p ng-bind="product.price"></p>
 					<!-- Conditionally show special price -->
-					<p ng-show="product.isSpecial">{{product.specialPrice}}</p>
+					<p></p>
 
 					<div class="description" ng-bind="product.description">
 						<!-- Product description -->
 					</div>
 					<div>
 						<ms-product-details-button product-id="{{product.guid}}"></ms-product-details-button>
-                        <ms-add-cart product="product"></ms-add-cart>
+						<ms-add-cart product="product"></ms-add-cart>
 					</div>
 				</div>
 			</div>
