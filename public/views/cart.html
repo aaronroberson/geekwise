@@ -82,8 +82,11 @@
 					</a>
 				</td>
 				<td>
-					<button type="button" class="btn btn-success">
-						Checkout <span class="glyphicon glyphicon-play"></span>
+					<button
+						class="btn btn-block btn-link"
+						ng-click="checkout()"
+						ng-disabled="getItemCount() < 1">
+						<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Checkout using PayPal"/>
 					</button>
 				</td>
 			</tr>

@@ -18,6 +18,10 @@
 
 	    $scope.cartTotal = CartService.getCartTotal;
 
+	    $scope.checkout = function() {
+		    CartService.checkout();
+	    }
+
     });
 
 })(window.angular);
