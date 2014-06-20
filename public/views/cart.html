@@ -72,17 +72,25 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td>
+                    <button class="btn btn-danger"
+                        ng-click="emptyCart()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Empty cart
+                    </button>
+				</td>
 				<td>
 					<a ui-sref="products" class="btn btn-default">
 						<span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
 					</a>
 				</td>
-				<td>
-					<button type="button" class="btn btn-success">
-						Checkout <span class="glyphicon glyphicon-play"></span>
-					</button>
-				</td>
+                <td>
+                    <button class="btn btn-block btn-link"
+                            ng-click="checkout()"
+                            ng-disabled="getItemCount() < 1">
+                        <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Checkout using PayPal"/>
+                    </button>
+                </td>
 			</tr>
 			</tbody>
 		</table>

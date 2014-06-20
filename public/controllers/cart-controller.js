@@ -8,15 +8,33 @@
 	    // Set the items on the scope to the items in the ProductService
 	    $scope.items = CartService.getItems();
 
-	    $scope.addItem = CartService.addItem;
+	    $scope.addItem = function(item) {
+            CartService.addItem(item);
+        };
 
-        $scope.getItemCount = CartService.getItemCount;
+        $scope.getItemCount = function() {
+            return CartService.getItemCount();
+        };
 
-	    $scope.removeItem = CartService.removeItem;
+	    $scope.removeItem = function(guid) {
+            CartService.removeItem(guid);
+        };
 
-	    $scope.cartSubtotal = CartService.getCartSubtotal;
+	    $scope.cartSubtotal = function() {
+            return CartService.getCartSubtotal();
+        };
 
-	    $scope.cartTotal = CartService.getCartTotal;
+        $scope.emptyCart = function() {
+            CartService.emptyCart();
+        }
+
+	    $scope.cartTotal = function() {
+            return CartService.getCartTotal();
+        };
+
+        $scope.checkout = function() {
+            CartService.checkout();
+        };
 
     });
 

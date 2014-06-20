@@ -3,7 +3,7 @@
 
 	var app = angular.module('MyStore');
 
-	app.factory('CartService', function($cookieStore, ProductService) {
+	app.factory('CartService', function($cookieStore, ProductService, config) {
 
 		// Private items variable
 		var items = {};
@@ -115,6 +115,48 @@
 
             getItemPrice: function(item) {
                 return parseFloat(item.isSpecial ? item.specialPrice : item.price);
+            },
+
+            checkout: function() {
+                // Create form DOM element
+                var form = $('<form></form>');
+
+                var data = {
+                    business: config.paypal.merchantId,
+                    currency_code: 'USD',
+                    cmd: '_cart',
+                    upload: 1,
+                    rm: "2",
+                    charset: "utf-8"
+                };
+
+                var counter = 0;
+
+                angular.forEach(items, function(item, key) {
+                    counter += 1;
+                    data["item_number_" + counter] = item.id;
+                    data["item_name_" + counter] = item.title;
+                    data["quantity_" + counter] = item.quantity;
+                    data["amount_" + counter] = cart.getItemPrice(item);
+                });
+
+                form.attr("action", "https://www.paypal.com/cgi-bin/webscr");
+                form.attr("method", "POST");
+                form.attr("style", "display:none;");
+
+                angular.forEach(data, function(value, name) {
+                    if (value != null) {
+                        var input = $("<input></input>").attr("type", "hidden").attr("name", name).val(value);
+                        form.append(input);
+                    }
+                });
+
+                $("body").append(form);
+
+                // submit form
+                form.submit();
+                form.remove();
+
             }
 		};
 
