@@ -12,21 +12,29 @@
 		var cart = {
 
 			getItems: function() {
-                var itemsCookie;
+				// Initialize the itemsCookie variable
+				var itemsCookie;
+				// Check if cart is empty
+				if(!items.length) {
+					// Get the items cookie
+					itemsCookie = $cookieStore.get('items');
+					// Check if the item cookie exists
+					if(itemsCookie) {
+						// Loop through the items in the cookie
+						angular.forEach(itemsCookie, function(item, key) {
+							// Get the product details from the ProductService using the guid
+							ProductService.getProduct(key).then(function(response){
+								var product = response.data;
+								// Update the quantity to the quantity saved in the cookie
+								product.quantity = item;
+								// Add the product to the cart items object using the guid as the key
+								items[product.guid] = product;
+							});
+						});
+					}
+				}
 				// Returns items object
-                if(!items.length) {
-                    itemsCookie = $cookieStore.get('items');
-                    if(itemsCookie) {
-                        angular.forEach(itemsCookie, function(item, key) {
-                            ProductService.getProduct(key).then(function(response){
-                                var product = response.data;
-                                product.quantity = item;
-                                items[product.guid] = product;
-                            });
-                        });
-                    }
-                }
-                return items;
+				return items;
 			},
 
 			addItem: function(item) {
@@ -61,6 +69,7 @@
 			emptyCart: function() {
 				// Sets items array to empty array
                 items = {};
+				// Remove the items cookie
                 $cookieStore.remove('items');
 			},
 
@@ -91,15 +100,18 @@
                 return cart.getCartSubtotal();
 			},
 
-            // aaronaroberson@gmail.com
-
-            updateItemsCookie: function() {
-                var itemsCookie = {};
-                angular.forEach(items, function(item, key) {
-                    itemsCookie[key] = item.quantity;
-                });
-                $cookieStore.put('items', itemsCookie);
-            },
+			updateItemsCookie: function() {
+				// Initialize an object to be saved as the cookie
+				var itemsCookie = {};
+				// Loop through the items in the cart
+				angular.forEach(items, function(item, key) {
+					// Add each item to the items cookie,
+					// using the guid as the key and the quantity as the value
+					itemsCookie[key] = item.quantity;
+				});
+				// Use the $cookieStore service to persist the itemsCookie object to the cookie named 'items'
+				$cookieStore.put('items', itemsCookie);
+			},
 
             getItemPrice: function(item) {
                 return parseFloat(item.isSpecial ? item.specialPrice : item.price);
